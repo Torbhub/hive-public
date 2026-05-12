@@ -1,0 +1,5 @@
+*.map
+*.ts
+*.tsx
+node_modules/
+.DS_Store
