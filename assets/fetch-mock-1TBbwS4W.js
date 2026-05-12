@@ -698,12 +698,32 @@ const routes = [
     uptime_s: 12345
   })],
   ["GET", /^\/api\/cost\/daily$/, () => ({
-    entries: Array.from({ length: 7 }, (_, i) => ({ date: `2026-05-${5 + i}`, total_usd: 2 + Math.random() * 3 }))
+    rollup: Array.from({ length: 7 }, (_, i) => ({
+      date: `2026-05-${String(5 + i).padStart(2, "0")}`,
+      input_tokens: Math.floor(2e4 + Math.random() * 3e4),
+      output_tokens: Math.floor(8e3 + Math.random() * 12e3),
+      cost_usd: 2 + Math.random() * 3
+    }))
   })],
-  ["GET", /^\/api\/cost\/hourly$/, () => ({
-    entries: Array.from({ length: 24 }, (_, i) => ({ hour: i, total_usd: 0.05 + Math.random() * 0.4 }))
+  ["GET", /^\/api\/cost\/hourly$/, () => {
+    const hours = Array.from({ length: 24 }, (_, i) => ({
+      hour: i,
+      cost_usd: 0.05 + Math.random() * 0.4,
+      input_tokens: Math.floor(800 + Math.random() * 1500),
+      output_tokens: Math.floor(300 + Math.random() * 700),
+      tasks_done: Math.floor(Math.random() * 4)
+    }));
+    return {
+      hours,
+      window_start: new Date(Date.now() - 24 * 3600 * 1e3).toISOString(),
+      summary: { tokens_last_5min: 1240, peak_tokens_hour: 14, peak_hour: 14 }
+    };
+  }],
+  ["GET", /^\/api\/costs(\?.*)?$/, () => ({
+    total_usd: 4.82,
+    breakdown: workers().slice(0, 5).map((w) => ({ group_key: w.id, amount_usd: 0.4 + Math.random() * 1.5 })),
+    period: "today"
   })],
-  ["GET", /^\/api\/costs$/, () => []],
   // Channels / messages
   ["GET", /^\/api\/channels$/, () => []],
   ["POST", /^\/api\/channels\/cleanup$/, () => ({ status: "ok", removed: 0 })],
