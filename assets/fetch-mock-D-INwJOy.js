@@ -746,7 +746,7 @@ function installFetchMock() {
     if (!path.startsWith("/api/") && path !== "/events" && path !== "/api/events") {
       return origFetch(input, init);
     }
-    if (path === "/events") return sseStub();
+    if (path === "/events" || path === "/api/events") return sseStub();
     for (const [m, re, handler] of routes) {
       if (m !== method) continue;
       if (!re.test(path)) continue;

@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/ConsolePage-BrEU1DQZ.js","assets/ConsolePage-D6Ep7oAm.css"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/ConsolePage-QYMZqlqo.js","assets/ConsolePage-D6Ep7oAm.css"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
@@ -21013,7 +21013,7 @@ function usePeriodicSync() {
     };
   }, []);
 }
-const ConsolePage = reactExports.lazy(() => __vitePreload(() => import("./ConsolePage-BrEU1DQZ.js"), true ? __vite__mapDeps([0,1]) : void 0).then((m) => ({ default: m.ConsolePage })));
+const ConsolePage = reactExports.lazy(() => __vitePreload(() => import("./ConsolePage-QYMZqlqo.js"), true ? __vite__mapDeps([0,1]) : void 0).then((m) => ({ default: m.ConsolePage })));
 function PageLoader() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", height: "60vh", color: "#78716c" }, children: "Loading…" });
 }
@@ -21056,18 +21056,16 @@ function App() {
   } catch {
   }
 })();
-{
-  __vitePreload(async () => {
-    const { installFetchMock } = await import("./fetch-mock-fHE68x-U.js");
-    return { installFetchMock };
-  }, true ? [] : void 0).then(({ installFetchMock }) => {
-    installFetchMock();
-    bootstrapSession();
-  });
-}
-ReactDOM$1.createRoot(document.getElementById("root")).render(
-  /* @__PURE__ */ jsxRuntimeExports.jsx(React2.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(BrowserRouter, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) }) })
-);
+const mockInstallPromise = __vitePreload(async () => {
+  const { installFetchMock } = await import("./fetch-mock-D-INwJOy.js");
+  return { installFetchMock };
+}, true ? [] : void 0).then(({ installFetchMock }) => installFetchMock());
+mockInstallPromise.then(() => {
+  bootstrapSession();
+  ReactDOM$1.createRoot(document.getElementById("root")).render(
+    /* @__PURE__ */ jsxRuntimeExports.jsx(React2.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(BrowserRouter, { basename: "/hive-public/", children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) }) })
+  );
+});
 export {
   ReactDOM as A,
   create as B,
