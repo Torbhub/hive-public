@@ -723,7 +723,15 @@ const routes = [
   ["GET", /^\/api\/worktrees$/, () => []],
   ["GET", /^\/api\/logs$/, () => ({ entries: [] })],
   ["GET", /^\/api\/meta\/engines$/, () => ["claude", "gemini", "codex"]],
-  ["GET", /^\/api\/meta\/roles$/, () => ["conductor", "worker", "duty", "readonly"]]
+  ["GET", /^\/api\/meta\/roles$/, () => ["conductor", "worker", "duty", "readonly"]],
+  // Event bus + history (consumed by event_bus.ts + activity feed)
+  ["GET", /^\/api\/events\/current_seq$/, () => ({ seq: 0 })],
+  ["GET", /^\/api\/events-history(\?.*)?$/, () => ({ events: events(), has_more: false })],
+  // Annotation pipeline (Views.Annotations + stores)
+  ["GET", /^\/api\/annotations$/, () => ({ annotations: [] })],
+  ["GET", /^\/api\/annotations\/[^/]+$/, () => new Response(null, { status: 404 })],
+  ["GET", /^\/api\/annotations\/missions$/, () => ({ missions: [] })],
+  ["POST", /^\/api\/annotations(\/.*)?$/, () => ({ status: "ok" })]
 ];
 function sseStub() {
   return new Response(new ReadableStream({ start: (c) => c.close() }), {
